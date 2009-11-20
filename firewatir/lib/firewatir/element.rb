@@ -1061,16 +1061,16 @@ module FireWatir
     #
     # Description:
     #   Function to fire click event on elements.
+    #   Optional button argument controls which mouse button was clicked (0 => left, 1 => middle, 2 => right)
     #
-    def click
+    def click button = 0
       assert_exists
       assert_enabled
 
       highlight(:set)
-      #puts "#{element_object} and #{element_type}"
-      case element_type
+      # puts "#{element_object} and #{element_type}"
 
-        when "HTMLAnchorElement", "HTMLImageElement"
+      if ["HTMLAnchorElement", "HTMLImageElement"].include?(element_type) || [1,2].include?(button)
         # Special check for link or anchor tag. Because click() doesn't work on links.
         # More info: http://www.w3.org/TR/DOM-Level-2-HTML/html.html#ID-48250443
         # https://bugzilla.mozilla.org/show_bug.cgi?id=148585
@@ -1078,7 +1078,7 @@ module FireWatir
         jssh_command = "var event = #{@container.document_var}.createEvent(\"MouseEvents\");"
 
         # Info about initMouseEvent at: http://www.xulplanet.com/references/objref/MouseEvent.html
-        jssh_command << "event.initMouseEvent('click',true,true,null,1,0,0,0,0,false,false,false,false,0,null);"
+        jssh_command << "event.initMouseEvent('click',true,true,null,1,0,0,0,0,false,false,false,false,#{button},null);"
         jssh_command << "#{element_object}.dispatchEvent(event);\n"
 
         #puts "jssh_command is: #{jssh_command}"

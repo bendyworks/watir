@@ -3,6 +3,7 @@
 .externalToolBuilders
 commonwatir/pkg
 firewatir/pkg
+test
 watir/pkg
 gems
 
