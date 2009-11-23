@@ -1,0 +1,32 @@
+<html>
+  <head>
+  <title>Alert Test</title>  
+  <script type="text/javascript">
+    window.onload = function() {
+      document.body.oncontextmenu = clickDetect;
+      document.body.onclick = clickDetect;
+    };
+    function clickDetect(e) {
+      btn = e.button;
+      btn_text = ["left", "middle", "right"]
+      testResult = document.getElementById('testResult');
+      testResult.value = "You " + btn_text[btn] + " clicked!";
+      return false;
+    }
+  </script>
+  </head>
+  <body>
+    <form action="get">
+    <p>Which mouse button was clicked?</p>
+    <ul>
+      <li>
+        Click me with different mouse buttons.<br/>
+        <input type="button" id="click_me" value="alert"/>
+      </li>
+    </ul>
+    <p>Results:</p>
+    <input type="text" style="width:248px;" id="testResult" value="Test Result" />
+    </form>
+  </body>
+
+</html>
