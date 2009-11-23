@@ -939,7 +939,6 @@ module FireWatir
     # Description:
     #   Checks element for display: none or visibility: hidden, these are
     #   the most common methods to hide an html element
-
     def visible?
       assert_exists
       val = js_eval "var val = 'true'; var str = ''; var obj = #{element_object}; while (obj != null) { try { str = #{@container.document_var}.defaultView.getComputedStyle(obj,null).visibility; if (str=='hidden') { val = 'false'; break; } str = #{@container.document_var}.defaultView.getComputedStyle(obj,null).display; if (str=='none') { val = 'false'; break; } } catch(err) {} obj = obj.parentNode; } val;"
@@ -1058,6 +1057,18 @@ module FireWatir
       end
     end
 
+    def right_click
+      self.click 2
+    end
+
+    def middle_click
+      self.click 1
+    end
+
+    def left_click
+      self.click
+    end
+
     #
     # Description:
     #   Function to fire click event on elements.
@@ -1081,7 +1092,7 @@ module FireWatir
         jssh_command << "event.initMouseEvent('click',true,true,null,1,0,0,0,0,false,false,false,false,#{button},null);"
         jssh_command << "#{element_object}.dispatchEvent(event);\n"
 
-        #puts "jssh_command is: #{jssh_command}"
+        # puts "jssh_command is: #{jssh_command}"
         jssh_socket.send("#{jssh_command}", 0)
         read_socket()
       else
